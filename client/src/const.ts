@@ -1,13 +1,10 @@
-import {
-  OAUTH_STATE_COOKIE,
-  encodeOAuthState,
-} from "@shared/const";
+export const NOT_ADMIN_ERR_MSG =
+  "You do not have required permission (10002)";
 
-export {
-  COOKIE_NAME,
-  ONE_YEAR_MS,
-} from "@shared/const";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://realtime-chat-backend-ymee.onrender.com";
 
 export const startLogin = () => {
-  window.location.href = "/api/oauth/login";
+  window.location.href = `${API_URL}/api/oauth/login`;
 };

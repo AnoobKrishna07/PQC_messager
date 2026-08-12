@@ -35,7 +35,7 @@ router.get("/logout", (req, res, next) => {
 
     req.session.destroy(() => {
       res.clearCookie("connect.sid");
-      res.redirect("/");
+      res.redirect("https://pqc-messager.vercel.app/");
     });
   });
 });

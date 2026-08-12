@@ -13,6 +13,7 @@ import { serveStatic, setupVite } from "./vite";
 import { upsertUserStatus } from "../db";
 import session from "express-session";
 import passport from "./auth";
+import cors from "cors";
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
     const server = net.createServer();
@@ -38,6 +39,15 @@ const userConnections = new Map<number, string[]>();
 async function startServer() {
   const app = express();
   const server = createServer(app);
+  app.use(
+  cors({
+    origin: [
+      "https://pqc-messager.vercel.app",
+      "http://localhost:3000",
+    ],
+    credentials: true,
+  })
+);
   
   // Initialize Socket.io
   const io = new SocketIOServer(server, {
@@ -55,8 +65,13 @@ async function startServer() {
     secret: process.env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    },
   })
-  );
+);
 
   app.use(passport.initialize());
   app.use(passport.session());
