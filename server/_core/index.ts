@@ -51,27 +51,33 @@ async function startServer() {
   
   // Initialize Socket.io
   const io = new SocketIOServer(server, {
-    cors: {
-      origin: "*",
-      methods: ["GET", "POST"],
-    },
+  cors: {
+    origin: "https://pqc-messager.vercel.app",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
   });
 
   // Configure body parser with larger size limit for file uploads
   app.use(express.json({ limit: "50mb" }));
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
+  app.set("trust proxy", 1);
+
+  app.set("trust proxy", 1);
+
   app.use(
-  session({
-    secret: process.env.SESSION_SECRET!,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === "production",
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    },
-  })
-);
+    session({
+      secret: process.env.SESSION_SECRET!,
+      resave: false,
+      saveUninitialized: false,
+      proxy: true,
+      cookie: {
+        secure: true,
+        httpOnly: true,
+        sameSite: "lax",
+      },
+    })
+  );
 
   app.use(passport.initialize());
   app.use(passport.session());

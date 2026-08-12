@@ -59,7 +59,5 @@ passport.use(
     }
   )
 );
-console.log("CLIENT ID:", process.env.GITHUB_CLIENT_ID);
-console.log("CLIENT SECRET:", process.env.GITHUB_CLIENT_SECRET);
-console.log("CALLBACK:", process.env.GITHUB_CALLBACK_URL);
+
 export default passport;

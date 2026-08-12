@@ -13,11 +13,11 @@ router.get(
 router.get(
   "/callback",
   passport.authenticate("github", {
-    failureRedirect: "/",
+    failureRedirect: "https://pqc-messager.vercel.app/",
     session: true,
   }),
   (_req, res) => {
-    res.redirect("/");
+    res.redirect("https://pqc-messager.vercel.app/");
   }
 );
 
