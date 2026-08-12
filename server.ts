@@ -1,7 +1,5 @@
 import dotenv from "dotenv";
 
-dotenv.config({
-  path: ".env.local",
-});
+dotenv.config();
 
 await import("./server/_core/index.ts");
